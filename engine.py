@@ -1,8 +1,10 @@
 import requests, json, tkinter, urllib.request
 
-API_LINK = 'https://api.opendota.com/api/'
-PLAYERS_LINK = API_LINK + '/players/'
+API_LINK = 'https://api.opendota.com/api'
+PLAYERS_LINK = API_LINK + '/players'
+HEROES_LINK = API_LINK + '/heroes'
 
+# Player data
 def get_player_link(playerid):
     return (PLAYERS_LINK + str(playerid))
 
@@ -53,3 +55,20 @@ def get_avatarfull():
 
 def get_local_profileurl():
     return read_local_player_data()['profile']['profileurl']
+
+# Hero data
+def get_heroes_data():
+    link = HEROES_LINK
+    req = requests.get(link)
+    data = json.loads(req.text)
+    return data
+
+def write_local_heroes_data():
+    file = open("heroes_data.json", "w")
+    file.write(json.dumps(get_heroes_data(), indent=4))
+    file.close()
+
+def read_local_heroes_data():
+    file = open("heroes_data.json", "r")
+    heroes_data = json.loads(file.read())
+    return heroes_data
