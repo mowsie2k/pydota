@@ -10,11 +10,15 @@ window.title('PyDotaTk')
 
 def get_input_accountid():
     input = input_accountid.get(1.0, "end-1c")
-    e.write_local_player_data(input)
-    personaname_label.config(text=e.get_local_personaname())
-    steamid_label.config(text=e.get_local_steamid())
-    profileurl_label.config(text=e.get_local_profileurl())
-    account_id_label.config(text=e.get_local_account_id())
+
+    global player 
+    player = e.Player(input)
+    player.populate_data()
+
+    personaname_label.config(text=player.profile_personaname)
+    steamid_label.config(text=player.profile_steamid)
+    profileurl_label.config(text=player.profile_profileurl)
+    account_id_label.config(text=player.profile_account_id)
 
 img = Image.open("avatarmedium.jpg")
 avatarmedium = ImageTk.PhotoImage(img)
